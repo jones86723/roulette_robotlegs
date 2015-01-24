@@ -9,7 +9,7 @@ package
 	public class roulette_robotlegs extends Sprite
 	{
 		
-		[Embed(source="../source/bg.jpg")]
+		[Embed(source="source/bg.jpg")]
 		private var Bg: Class;
 		
 		private var _context:RouletteContext;
