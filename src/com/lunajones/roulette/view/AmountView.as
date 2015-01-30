@@ -3,19 +3,19 @@ package com.lunajones.roulette.view
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
-	[Embed('../../../../source/roulette_asset.swf', symbol='Bet')]
-	public class BetView extends Sprite
+	[Embed('../../../../source/roulette_asset.swf', symbol='Amount')]
+	public class AmountView extends Sprite
 	{
 		
 		
-		public function BetView()
+		public function AmountView()
 		{
 			super();
 		}
 		
 		public function main():void{
-			this.x = 0;
-			this.y = 267;
+			this.x = 455;
+			this.y = 673;
 			
 		}
 	}
