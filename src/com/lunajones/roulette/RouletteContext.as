@@ -2,7 +2,7 @@ package com.lunajones.roulette
 {
 	import org.robotlegs.base.ContextEvent;
 	
-	import com.lunajones.roulette.model.WagerModel;
+	import com.lunajones.roulette.model.GameModel;
 	
 	import com.lunajones.roulette.view.AmountView;
 	import com.lunajones.roulette.view.AmountViewMediator;
@@ -30,7 +30,7 @@ package com.lunajones.roulette
 		
 		public override function startup():void{
 			
-			injector.mapSingleton(WagerModel);
+			injector.mapSingleton(GameModel);
 			
 			mediatorMap.mapView(AmountView,AmountViewMediator);
 			mediatorMap.mapView(BetView,BetViewMediator);
@@ -41,12 +41,12 @@ package com.lunajones.roulette
 			mediatorMap.mapView(RouletteView,RouletteViewMediator);
 			
 			contextView.addChild(new AmountView());
-			contextView.addChild(new BetView());
 			contextView.addChild(new ButtonsView());
 			contextView.addChild(new ChipsView());
 			contextView.addChild(new HistoryView());
 			contextView.addChild(new WagerView());
 			contextView.addChild(new RouletteView());
+			contextView.addChild(new BetView());
 			
 			dispatchEvent(new ContextEvent(ContextEvent.STARTUP));
 			

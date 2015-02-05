@@ -1,7 +1,7 @@
 package com.lunajones.roulette.view
 {
-	import com.lunajones.roulette.model.WagerModel;
-	import com.lunajones.roulette.model.event.WagerEvent;
+	import com.lunajones.roulette.model.GameModel;
+	import com.lunajones.roulette.model.event.GameEvent;
 	import com.lunajones.roulette.view.WagerView;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -12,7 +12,7 @@ package com.lunajones.roulette.view
 		public var wagerView:WagerView;
 		
 		[Inject]
-		public var wagerModel:WagerModel;
+		public var gameModel:GameModel;
 		
 		
 		public function WagerViewMediator()
@@ -21,13 +21,17 @@ package com.lunajones.roulette.view
 		}
 		
 		override public function onRegister():void{
+			
 			wagerView.main();
-			eventMap.mapListener(eventDispatcher,WagerEvent.CHANGE,onchange);
+			eventMap.mapListener(eventDispatcher,GameEvent.CHANGE,onchange);
+			
 		}
 		
-		private function onchange(e:WagerEvent):void{
-			trace(0);
-			wagerView.txt.text = "28";
+		//當金額改變
+		private function onchange(e:GameEvent):void{
+		
+			wagerView.txt.text = String(gameModel.wager);
+			
 		}
 	}
 }
