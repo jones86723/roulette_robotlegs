@@ -1,5 +1,7 @@
 package com.lunajones.roulette.view
 {
+	import com.lunajones.roulette.model.GameModel;
+	import com.lunajones.roulette.model.event.GameEvent;
 	import com.lunajones.roulette.view.BetView;
 	import com.lunajones.roulette.view.event.ChipEvent;
 	
@@ -14,6 +16,10 @@ package com.lunajones.roulette.view
 	{
 		[Inject]
 		public var view:BetView;
+		
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		//bug記錄:需要在Chip10用２個影格,他才能變辯識MovieClip
 		[Embed(source='../../../../source/roulette_asset.swf', symbol='Chip5')]
@@ -30,8 +36,8 @@ package com.lunajones.roulette.view
 		
 		[Embed(source='../../../../source/roulette_asset.swf', symbol='Chip100')]
 		private var Chip100:Class;
-		
 		private var dragMc:MovieClip;
+		private var chooseClass:Class;
 		
 		public function BetViewMediator()
 		{
@@ -48,28 +54,56 @@ package com.lunajones.roulette.view
 			//trace(ary);
 			eventMap.mapListener(eventDispatcher,ChipEvent.DRAG_MOVE,ondragmove);
 			eventMap.mapListener(eventDispatcher,ChipEvent.CHOOSE_CHIP,onchoosechip);
+			eventMap.mapListener(eventDispatcher,ChipEvent.CHOOSE_BET,onchoosebet);
+			
+			eventMap.mapListener(eventDispatcher,GameEvent.CHANGE,onchange);
 		}
-		
+		private function onchange(e:GameEvent):void{
+			view.removeAllBet()
+			var wagerhistory:Array = gameModel.wagerHistory;
+			var choosechip:int = gameModel.chooseChip;
+			for(var i:int = 0; i<wagerhistory.length;i++){
+				var mc:MovieClip= new chooseClass() as MovieClip;
+				var bet:MovieClip = view.zones.getChildByName(wagerhistory[i].bet) as MovieClip;
+				mc.x = bet.x;
+				mc.y = bet.y;
+				mc.scaleX = 0.5;
+				mc.scaleY = 0.5;
+				view.bets.addChild(mc);
+			}
+			gameModel.chooseBetZone = "";
+		}
 		private function onchoosechip(e:ChipEvent):void{
 			
 			var mc:MovieClip;
 			switch(e.data){
 				case "chip_5":
-						mc= new Chip5() as MovieClip;
+						//mc= new Chip5() as MovieClip;
+						chooseClass = Chip5; 
+						gameModel.chooseChip = 5;
 					break;
 				case "chip_10":
-						mc= new Chip10() as MovieClip;
+						//mc= new Chip10() as MovieClip;
+						gameModel.chooseChip = 10;
+						chooseClass = Chip10; 
 					break;
 				case "chip_20":
-						mc= new Chip20() as MovieClip;
+						//mc= new Chip20() as MovieClip;
+						gameModel.chooseChip = 20;
+						chooseClass = Chip20; 
 					break;
 				case "chip_50":
-						mc= new Chip50() as MovieClip;
+						//mc= new Chip50() as MovieClip;
+						gameModel.chooseChip = 50;
+						chooseClass = Chip50; 
 					break;
 				case "chip_100":
-						mc= new Chip100() as MovieClip;
+						//mc= new Chip100() as MovieClip;
+						gameModel.chooseChip = 100;
+						chooseClass = Chip100; 
 					break;
 			}
+			mc= new chooseClass() as MovieClip;
 			dragMc = mc;
 			mc.scaleX = 0.5;
 			mc.scaleY = 0.5;
@@ -89,18 +123,30 @@ package com.lunajones.roulette.view
 			return children;
 		}
 		
+		private function onchoosebet(e:ChipEvent):void{
+		
+			//var mc:MovieClip = view.zones.getChildByName(gameModel.chooseBetZone) as MovieClip;
+			view.removeChild(dragMc);
+			
+			
+		}
+		
 		private function ondragmove(e:ChipEvent):void{
 			dragMc.x = view.mouseX;
 			dragMc.y = view.mouseY;
+			var isChoose:Boolean = false;
 			for (var i:uint = 0; i < view.zones.numChildren; i++){
-				var mc:MovieClip = view.zones.getChildAt(i) as MovieClip;
-				var r:Rectangle = new Rectangle(mc.x+20,mc.y,mc.width,mc.height);
-				if(r.contains(view.mouseX,view.mouseY)){
-					mc.visible = true;
+				var betMc:MovieClip = view.zones.getChildAt(i) as MovieClip;
+				if(dragMc.hitTestObject(betMc) && !isChoose){
+					isChoose = true;
+					betMc.visible = true;
+					gameModel.chooseBetZone = betMc.name;
+					
 				}else{
-					mc.visible = false;
+					betMc.visible = false;
 				}
 			}
+			if(!isChoose)gameModel.chooseBetZone = "";
 		}
 	}
 }

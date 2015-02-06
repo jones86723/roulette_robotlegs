@@ -8,7 +8,7 @@ package com.lunajones.roulette.view
 	{
 		//設定原本flash命名好的元配名稱匹配
 		public var zones:MovieClip;
-		
+		public var bets:MovieClip;
 		
 		
 		public function BetView()
@@ -22,6 +22,16 @@ package com.lunajones.roulette.view
 			for (var i:uint = 0; i < zones.numChildren; i++)
 				zones.getChildAt(i).visible = false;;
 			
+		}
+		
+		public function removeAllBet():void{
+			for (var i:uint = 0; i < this.bets.numChildren; i++)
+			{
+				
+				//if(this.getChildAt(i)!=zones){
+					this.bets.removeChildAt(0);
+				//}
+			}	
 		}
 	}
 }

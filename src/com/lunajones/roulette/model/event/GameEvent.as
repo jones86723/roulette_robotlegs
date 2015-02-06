@@ -6,6 +6,8 @@ package com.lunajones.roulette.model.event
 	{
 		public static const CHANGE:String ="change";
 		
+		
+		
 		public function GameEvent(type:String)
 		{
 			super(type, bubbles, cancelable);
