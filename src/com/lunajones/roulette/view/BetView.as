@@ -25,9 +25,10 @@ package com.lunajones.roulette.view
 		}
 		
 		public function removeAllBet():void{
-			for (var i:uint = 0; i < this.bets.numChildren; i++)
+			var num:int = this.bets.numChildren;
+			for (var i:uint = 0; i < num; i++)
 			{
-				
+				//trace(i);
 				//if(this.getChildAt(i)!=zones){
 					this.bets.removeChildAt(0);
 				//}

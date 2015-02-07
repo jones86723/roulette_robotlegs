@@ -6,7 +6,7 @@ package com.lunajones.roulette.view
 	[Embed('../../../../source/roulette_asset.swf', symbol='History')]
 	public class HistoryView extends Sprite
 	{
-		
+		public var txts:MovieClip;
 		
 		public function HistoryView()
 		{
@@ -19,4 +19,4 @@ package com.lunajones.roulette.view
 			
 		}
 	}
-}
+} 

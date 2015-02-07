@@ -1,6 +1,7 @@
 package com.lunajones.roulette.model
 {
 	import com.lunajones.roulette.model.event.GameEvent;
+	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class GameModel extends Actor
@@ -10,6 +11,8 @@ package com.lunajones.roulette.model
 		private var _chooseChip:int = 0;//選擇的籌碼(只能選一種)
 		private var _chooseBetZone:String = ""//滑鼠選擇的區域
 		private var _wagerHistory:Array = [];//投注記錄
+		private var _result:int = -1;
+		private var _resultHistory:Array = [];
 		
 		public function GameModel()
 		{
@@ -25,15 +28,22 @@ package com.lunajones.roulette.model
 			}
 		}
 		
-		public function removeWager(num:int):void{//清除全部投注記錄
+		public function doubleWager():void{
+			_wager*=2;
+			dispatch(new GameEvent(GameEvent.CHANGE));
+		}
+		
+		public function clearWager():void{//清除全部投注記錄
 			_wager = 0;
 			_wagerHistory =[];
+			_chooseChip = 0;
 			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
 		public function parentWager():void{//上一次投注記錄
 			_wager -= _chooseChip;
-			_wagerHistory.shift();
+			_wagerHistory.pop();
+			trace(_wagerHistory)
 			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
@@ -68,6 +78,23 @@ package com.lunajones.roulette.model
 		public function get wagerHistory():Array{
 			return _wagerHistory;
 		}
+		
+		public function set result(num:int):void{
+			
+			_result = num;
+			_resultHistory.push(num);
+			dispatch(new GameEvent(GameEvent.GET_RESULT));
+		}
+		
+		public function get result():int{
+			return _result;
+		}
+		
+		public function get resultHistory():Array{
+			return _resultHistory;
+		}
+		
+		
 		
 	}
 }

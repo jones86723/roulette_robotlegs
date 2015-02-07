@@ -5,7 +5,7 @@ package com.lunajones.roulette.model.event
 	public class GameEvent extends Event
 	{
 		public static const CHANGE:String ="change";
-		
+		public static const GET_RESULT:String ="get_result";
 		
 		
 		public function GameEvent(type:String)

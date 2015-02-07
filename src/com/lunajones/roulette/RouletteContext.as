@@ -45,8 +45,9 @@ package com.lunajones.roulette
 			contextView.addChild(new ChipsView());
 			contextView.addChild(new HistoryView());
 			contextView.addChild(new WagerView());
-			contextView.addChild(new RouletteView());
+			
 			contextView.addChild(new BetView());
+			contextView.addChild(new RouletteView());
 			
 			dispatchEvent(new ContextEvent(ContextEvent.STARTUP));
 			
