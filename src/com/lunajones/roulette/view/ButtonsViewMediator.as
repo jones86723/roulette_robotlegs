@@ -27,6 +27,7 @@ package com.lunajones.roulette.view
 			eventMap.mapListener(view.doubleBtn,MouseEvent.CLICK,onclickdouble);
 			eventMap.mapListener(view.clearBtn,MouseEvent.CLICK,onclickclear);
 			eventMap.mapListener(view.backBtn,MouseEvent.CLICK,onclickback);
+			eventMap.mapListener(view.againBtn,MouseEvent.CLICK,onclickagain);
 			eventMap.mapListener(view.startBtn,MouseEvent.CLICK,onclickstart);
 			
 		}
@@ -41,6 +42,10 @@ package com.lunajones.roulette.view
 		
 		private function onclickback(e:MouseEvent):void{
 			model.parentWager();
+		}
+		
+		private function onclickagain(e:MouseEvent):void{
+			model.againWager();
 		}
 		
 		private function onclickstart(e:MouseEvent):void{

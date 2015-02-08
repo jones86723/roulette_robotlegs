@@ -9,8 +9,6 @@ package com.lunajones.roulette.view
 	import flash.events.MouseEvent;
 	
 	import org.robotlegs.mvcs.Mediator;
-	import com.lunajones.roulette.model.GameModel;
-	import com.lunajones.roulette.model.event.GameEvent;
 	
 	
 	public class ChipsViewMediator extends Mediator
@@ -35,12 +33,17 @@ package com.lunajones.roulette.view
 			eventMap.mapListener(view.chip_100, MouseEvent.MOUSE_DOWN, onmousedownchip);
 			
 			eventMap.mapListener(eventDispatcher,GameEvent.CHANGE,onchange);
+			eventMap.mapListener(eventDispatcher,GameEvent.GET_RESULT,ongetresult);
 		}
 		
 		private function onchange(e:GameEvent):void{
 			if(model.chooseChip==0){
 				enabledChip();
 			}	
+		}
+		
+		private function ongetresult(e:GameEvent):void{
+			enabledChip();
 		}
 		
 		private function onmousedownchip(e:MouseEvent):void{

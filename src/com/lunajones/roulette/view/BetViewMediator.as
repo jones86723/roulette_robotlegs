@@ -57,6 +57,7 @@ package com.lunajones.roulette.view
 			eventMap.mapListener(eventDispatcher,ChipEvent.CHOOSE_BET,onchoosebet);
 			
 			eventMap.mapListener(eventDispatcher,GameEvent.CHANGE,onchange);
+			eventMap.mapListener(eventDispatcher,GameEvent.GET_RESULT,ongetresult);
 		}
 		private function onchange(e:GameEvent):void{
 			view.removeAllBet()
@@ -73,6 +74,11 @@ package com.lunajones.roulette.view
 			}
 			gameModel.chooseBetZone = "";
 		}
+		
+		private function ongetresult(e:GameEvent):void{
+			view.removeAllBet()
+		}
+		
 		private function onchoosechip(e:ChipEvent):void{
 			
 			var mc:MovieClip;
@@ -124,11 +130,8 @@ package com.lunajones.roulette.view
 		}
 		
 		private function onchoosebet(e:ChipEvent):void{
-		
 			//var mc:MovieClip = view.zones.getChildByName(gameModel.chooseBetZone) as MovieClip;
 			view.removeChild(dragMc);
-			
-			
 		}
 		
 		private function ondragmove(e:ChipEvent):void{

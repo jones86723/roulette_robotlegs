@@ -12,6 +12,7 @@ package com.lunajones.roulette.model
 		private var _chooseBetZone:String = ""//滑鼠選擇的區域
 		private var _wagerHistory:Array = [];//投注記錄
 		private var _result:int = -1;
+		private var _lastWagerHistory:Array = [];
 		private var _resultHistory:Array = [];
 		
 		public function GameModel()
@@ -26,6 +27,13 @@ package com.lunajones.roulette.model
 				_wagerHistory.push({bet:_chooseBetZone,num:_chooseChip});
 				dispatch(new GameEvent(GameEvent.CHANGE));
 			}
+		}
+		
+		public function againWager():void{
+			_amount -= _wagerHistory.length * _chooseChip;
+			_wager += _wagerHistory.length * _chooseChip;
+			_wagerHistory = _lastWagerHistory.concat();
+			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
 		public function doubleWager():void{
@@ -83,6 +91,8 @@ package com.lunajones.roulette.model
 			
 			_result = num;
 			_resultHistory.push(num);
+			_lastWagerHistory=_wagerHistory.concat();
+			clearWager();
 			dispatch(new GameEvent(GameEvent.GET_RESULT));
 		}
 		
