@@ -46,7 +46,7 @@ package com.lunajones.roulette.view
 		
 		override public function onRegister():void{
 			view.main();
-			//trace()
+			
 			var ary:Array = getChildrenOf(view.zones);
 			for(var i:int=0 ;i<ary.length;i++ ){
 				trace(ary[i].name)
@@ -61,15 +61,20 @@ package com.lunajones.roulette.view
 		}
 		private function onchange(e:GameEvent):void{
 			view.removeAllBet()
-			var wagerhistory:Array = gameModel.wagerHistory;
+			
 			var choosechip:int = gameModel.chooseChip;
-			for(var i:int = 0; i<wagerhistory.length;i++){
+			var rwargerHistory:Array = gameModel.rwargerHistory;
+			
+			for(var n:int = 0; n<rwargerHistory.length;n++){
 				var mc:MovieClip= new chooseClass() as MovieClip;
-				var bet:MovieClip = view.zones.getChildByName(wagerhistory[i].bet) as MovieClip;
+				var bet:MovieClip = view.zones.getChildByName(rwargerHistory[n].bet) as MovieClip;
 				mc.x = bet.x;
 				mc.y = bet.y;
 				mc.scaleX = 0.5;
 				mc.scaleY = 0.5;
+				if(rwargerHistory[n].total>1){
+					mc.txt.text = "x"+rwargerHistory[n].total;
+				}
 				view.bets.addChild(mc);
 			}
 			gameModel.chooseBetZone = "";

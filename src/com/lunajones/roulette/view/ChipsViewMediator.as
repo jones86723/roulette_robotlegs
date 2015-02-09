@@ -34,6 +34,7 @@ package com.lunajones.roulette.view
 			
 			eventMap.mapListener(eventDispatcher,GameEvent.CHANGE,onchange);
 			eventMap.mapListener(eventDispatcher,GameEvent.GET_RESULT,ongetresult);
+			eventMap.mapListener(eventDispatcher,GameEvent.CHOOSE_FIRST_CHIP,onchoosefirstchip);
 		}
 		
 		private function onchange(e:GameEvent):void{
@@ -46,8 +47,13 @@ package com.lunajones.roulette.view
 			enabledChip();
 		}
 		
+		private function onchoosefirstchip(e:GameEvent):void{
+			setOnly();
+		}
+		
+		
 		private function onmousedownchip(e:MouseEvent):void{
-			dispatch(new ChipEvent(ChipEvent.CHOOSE_CHIP,e.target.name));
+			dispatch(new ChipEvent(ChipEvent.CHOOSE_CHIP,e.currentTarget.name));
 			eventMap.mapListener(contextView, MouseEvent.MOUSE_MOVE, onmousemovechip);
 			eventMap.mapListener(contextView, MouseEvent.MOUSE_UP, onmouseupchip);
 		}
@@ -57,7 +63,7 @@ package com.lunajones.roulette.view
 				eventMap.unmapListener(contextView, MouseEvent.MOUSE_MOVE, onmousemovechip);
 				dispatch(new ChipEvent(ChipEvent.CHOOSE_BET,null));
 				model.addWager();
-				setOnly();
+				
 				
 			}
 		}

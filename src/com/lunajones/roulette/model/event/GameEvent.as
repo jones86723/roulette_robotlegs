@@ -6,7 +6,7 @@ package com.lunajones.roulette.model.event
 	{
 		public static const CHANGE:String ="change";
 		public static const GET_RESULT:String ="get_result";
-		
+		public static const CHOOSE_FIRST_CHIP:String = "choose_first_chip";
 		
 		public function GameEvent(type:String)
 		{

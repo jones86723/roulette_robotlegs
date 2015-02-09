@@ -7,6 +7,7 @@ package com.lunajones.roulette.view
 	[Embed('../../../../source/roulette_asset.swf', symbol='Chips')]
 	public class ChipsView extends Sprite
 	{
+		
 		//設定原本flash命名好的元配名稱匹配
 		public var chip_100:MovieClip;
 		public var chip_50:MovieClip;

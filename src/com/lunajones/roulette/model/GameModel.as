@@ -12,6 +12,7 @@ package com.lunajones.roulette.model
 		private var _chooseBetZone:String = ""//滑鼠選擇的區域
 		private var _wagerHistory:Array = [];//投注記錄
 		private var _result:int = -1;
+		private var _lastChooseChip:int =0;
 		private var _lastWagerHistory:Array = [];
 		private var _resultHistory:Array = [];
 		
@@ -24,20 +25,26 @@ package com.lunajones.roulette.model
 			if(_chooseBetZone != ""){
 				_amount -= _chooseChip;
 				_wager += _chooseChip;
-				_wagerHistory.push({bet:_chooseBetZone,num:_chooseChip});
+				if(_wagerHistory.length==0){
+					dispatch(new GameEvent(GameEvent.CHOOSE_FIRST_CHIP));
+				}
+				_wagerHistory.push({bet:_chooseBetZone,num:_chooseChip,total:1});
 				dispatch(new GameEvent(GameEvent.CHANGE));
 			}
 		}
 		
 		public function againWager():void{
-			_amount -= _wagerHistory.length * _chooseChip;
-			_wager += _wagerHistory.length * _chooseChip;
+			_amount -= _lastWagerHistory.length * _lastChooseChip;
+			_wager += _lastWagerHistory.length * _lastChooseChip;
+			_chooseChip = _lastChooseChip;
 			_wagerHistory = _lastWagerHistory.concat();
+			dispatch(new GameEvent(GameEvent.CHOOSE_FIRST_CHIP));
 			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
 		public function doubleWager():void{
 			_wager*=2;
+			_wagerHistory = _wagerHistory.concat(_wagerHistory);
 			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
@@ -53,6 +60,27 @@ package com.lunajones.roulette.model
 			_wagerHistory.pop();
 			trace(_wagerHistory)
 			dispatch(new GameEvent(GameEvent.CHANGE));
+		}
+		
+		public function get rwargerHistory():Array{
+			var ary:Array =new Array();
+			for(var i:int = 0; i<_wagerHistory.length;i++){
+				var o:Boolean = false;
+				for(var j:int=0;j<ary.length;j++){
+					if(ary[j].bet == _wagerHistory[i].bet){
+						ary[j].total+=1;
+						o = true;
+					}
+				}
+				if(o == false){
+					var obj:Object = new Object();
+					obj.bet = _wagerHistory[i].bet;
+					obj.chip = _wagerHistory[i].chip;
+					obj.total = _wagerHistory[i].total;
+					ary.push(obj);
+				};
+			}
+			return ary;
 		}
 		
 		public function set amount(num:int):void{
@@ -91,6 +119,7 @@ package com.lunajones.roulette.model
 			
 			_result = num;
 			_resultHistory.push(num);
+			_lastChooseChip = _chooseChip;
 			_lastWagerHistory=_wagerHistory.concat();
 			clearWager();
 			dispatch(new GameEvent(GameEvent.GET_RESULT));
