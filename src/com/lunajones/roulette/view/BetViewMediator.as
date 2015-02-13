@@ -5,6 +5,7 @@ package com.lunajones.roulette.view
 	import com.lunajones.roulette.view.BetView;
 	import com.lunajones.roulette.view.event.ChipEvent;
 	
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -39,6 +40,10 @@ package com.lunajones.roulette.view
 		private var dragMc:MovieClip;
 		private var chooseClass:Class;
 		
+		
+		
+			
+			
 		public function BetViewMediator()
 		{
 			super();	
@@ -82,6 +87,10 @@ package com.lunajones.roulette.view
 		
 		private function ongetresult(e:GameEvent):void{
 			view.removeAllBet()
+				
+			
+			
+
 		}
 		
 		private function onchoosechip(e:ChipEvent):void{

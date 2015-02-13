@@ -1,5 +1,6 @@
 package com.lunajones.roulette.model
 {
+	import com.lunajones.roulette.NumberUtils;
 	import com.lunajones.roulette.model.event.GameEvent;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -15,6 +16,7 @@ package com.lunajones.roulette.model
 		private var _lastChooseChip:int =0;
 		private var _lastWagerHistory:Array = [];
 		private var _resultHistory:Array = [];
+		private var _winMoney:int=0;
 		
 		public function GameModel()
 		{
@@ -58,7 +60,7 @@ package com.lunajones.roulette.model
 		public function parentWager():void{//上一次投注記錄
 			_wager -= _chooseChip;
 			_wagerHistory.pop();
-			trace(_wagerHistory)
+			//trace(_wagerHistory)
 			dispatch(new GameEvent(GameEvent.CHANGE));
 		}
 		
@@ -121,7 +123,15 @@ package com.lunajones.roulette.model
 			_resultHistory.push(num);
 			_lastChooseChip = _chooseChip;
 			_lastWagerHistory=_wagerHistory.concat();
+			_winMoney = 0;
+			for(var i:int=0;i<_wagerHistory.length;i++){
+				var ch:String =_wagerHistory[i].bet;
+				_winMoney+=NumberUtils.getWin(_result,ch)*_chooseChip;
+			}
+			trace(_winMoney);
+			_amount+=_winMoney;
 			clearWager();
+			//trace("rate="+NumberUtils.getWin(_result,"n0"));
 			dispatch(new GameEvent(GameEvent.GET_RESULT));
 		}
 		
