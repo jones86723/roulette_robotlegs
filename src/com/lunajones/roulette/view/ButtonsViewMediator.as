@@ -49,7 +49,7 @@ package com.lunajones.roulette.view
 		}
 		
 		private function onclickstart(e:MouseEvent):void{
-			dispatch(new RouletteEvent(RouletteEvent.START_RUN));
+			dispatch(new RouletteEvent(RouletteEvent.START_RUN,null));
 		}
 	}
 }

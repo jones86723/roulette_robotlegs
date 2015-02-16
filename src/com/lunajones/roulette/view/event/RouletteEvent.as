@@ -6,9 +6,13 @@ package com.lunajones.roulette.view.event
 	{
 		public static const START_RUN:String = "start_run";
 		public static const FINISH_RUN:String = "finish_run";
-		public function RouletteEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		
+		public var data: Object;
+		
+		public function RouletteEvent(type:String, data:Object ,bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
+			this.data = data;
 		}
 	}
 }

@@ -9,6 +9,8 @@ package com.lunajones.roulette.view
 	
 	import org.robotlegs.mvcs.Mediator;
 	
+	
+	
 	public class RouletteViewMediator extends Mediator
 	{
 		[Inject]
@@ -25,21 +27,22 @@ package com.lunajones.roulette.view
 		override public function onRegister():void{
 			view.main();
 			eventMap.mapListener(eventDispatcher,RouletteEvent.START_RUN,onstartrun);
+			eventMap.mapListener(view,RouletteEvent.FINISH_RUN,onfinishrun);
 			eventMap.mapListener(eventDispatcher,GameEvent.GET_RESULT,ongetresult);
 		}
-		
+
 		private function onstartrun(e:RouletteEvent):void{
-			TweenLite.to(view,0.8,{y:50,onComplete:runcomplete});
+			view.runNumber();
 		}
 		
-		private function runcomplete():void{
-			var rd:int=randomRange(0,36);
-			model.result = rd;
-		}
-		
+				
 		private function ongetresult(e:GameEvent):void{
 			
-			TweenLite.to(view,0.8,{y:-336});
+		}
+		
+		private function onfinishrun(e:RouletteEvent):void{
+			model.result = e.data as Number;
+			trace("model.result="+model.result)
 		}
 		
 		private function randomRange(min:Number, max:Number):Number {
