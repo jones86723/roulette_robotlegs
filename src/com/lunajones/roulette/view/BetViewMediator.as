@@ -145,7 +145,9 @@ package com.lunajones.roulette.view
 		
 		private function onchoosebet(e:ChipEvent):void{
 			//var mc:MovieClip = view.zones.getChildByName(gameModel.chooseBetZone) as MovieClip;
-			view.removeChild(dragMc);
+			if(view.contains(dragMc)){
+				view.removeChild(dragMc);
+			}
 		}
 		
 		private function ondragmove(e:ChipEvent):void{
@@ -154,7 +156,7 @@ package com.lunajones.roulette.view
 			var isChoose:Boolean = false;
 			for (var i:uint = 0; i < view.zones.numChildren; i++){
 				var betMc:MovieClip = view.zones.getChildAt(i) as MovieClip;
-				if(dragMc.hitTestObject(betMc) && !isChoose){
+				if(dragMc.hitPoint.hitTestObject(betMc) && !isChoose){
 					isChoose = true;
 					betMc.visible = true;
 					gameModel.chooseBetZone = betMc.name;

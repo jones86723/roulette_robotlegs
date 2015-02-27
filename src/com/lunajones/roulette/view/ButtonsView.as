@@ -21,7 +21,11 @@ package com.lunajones.roulette.view
 		public function main():void{
 			this.x = 611;
 			this.y = 672;
-			
+			backBtn.alpha=0.5;
+			doubleBtn.alpha=0.5;
+			clearBtn.alpha=0.5;
+			startBtn.alpha=0.5;
+			againBtn.alpha = 0.5;
 		}
 	}
 }

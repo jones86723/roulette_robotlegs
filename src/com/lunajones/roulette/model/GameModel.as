@@ -55,6 +55,9 @@ package com.lunajones.roulette.model
 			_wagerHistory =[];
 			_chooseChip = 0;
 			dispatch(new GameEvent(GameEvent.CHANGE));
+			if(_wagerHistory.length==0){
+				dispatch(new GameEvent(GameEvent.CLEAR_ALL));
+			}
 		}
 		
 		public function parentWager():void{//上一次投注記錄
@@ -62,6 +65,9 @@ package com.lunajones.roulette.model
 			_wagerHistory.pop();
 			//trace(_wagerHistory)
 			dispatch(new GameEvent(GameEvent.CHANGE));
+			if(_wagerHistory.length==0){
+				dispatch(new GameEvent(GameEvent.CLEAR_ALL));
+			}
 		}
 		
 		public function get rwargerHistory():Array{

@@ -192,8 +192,8 @@ package com.lunajones.roulette.view
 			TweenLite.to(this,0.8,{y:100});
 			ctime = 0;
 			linebody.SetPosition(new b2Vec2(0,10/worldScale))
-			box.SetPosition(new b2Vec2(10,400/worldScale))
-			box.ApplyImpulse(new b2Vec2(15000,0),box.GetWorldCenter());
+			box.SetPosition(new b2Vec2(Math.random()*20,400/worldScale))
+			box.ApplyImpulse(new b2Vec2(12000*Math.random()*3000,0),box.GetWorldCenter());
 		}
 	}
 }
